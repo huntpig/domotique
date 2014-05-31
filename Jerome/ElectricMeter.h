@@ -19,6 +19,7 @@ class ElectricMeter
     HardwareSerial                      *_serialPort;
     unsigned char                       _currentMeterPin;
     ElectricMeterState                  _stateCycle;
+    char                                *_linePrefix;
     String                              _line;
     ElectricMeterChecksumErrorCallback  _checksumErrorCallback;
     ElectricMeterUnknownLineCallback    _unknownLineCallback;
@@ -29,7 +30,7 @@ class ElectricMeter
     char parseLine(void);    
     
 public:
-    ElectricMeter(void);
+    ElectricMeter(char *linePrefix = NULL);
     
     void setSerialPort(HardwareSerial *serialPort);
     void addMeterPin(unsigned char meterPin) { pinMode(meterPin, OUTPUT); digitalWrite(meterPin, LOW); };

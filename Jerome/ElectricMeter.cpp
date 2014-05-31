@@ -39,8 +39,9 @@ static char checksum(String *line)
     return sum;
 }
 
-ElectricMeter::ElectricMeter(void)
+ElectricMeter::ElectricMeter(char *linePrefix)
 {
+    _linePrefix = linePrefix;
     _serialPort = NULL;
     _stateCycle = ElectricMeterStateWaitingForCycle;
     _checksumErrorCallback = NULL;
@@ -112,6 +113,9 @@ char ElectricMeter::parseLine(void)
         _completeCycle = _currentCycle;
         _currentCycle = "";
         identificationLine = 1;
+    }
+    if (_linePrefix) {
+        _currentCycle += _linePrefix;
     }
     _currentCycle += _line;
     _currentCycle += "\r\n";
